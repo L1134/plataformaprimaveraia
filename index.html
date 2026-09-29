@@ -60,9 +60,9 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 ::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-thumb{background:#c9a84c;border-radius:2px;}
 :root{
-  --bg:#09060a;--bg2:#120d14;--bg3:#1a1420;--card:#16111c;
-  --gold:#c9a84c;--gold2:#e8d5a0;--cream:#f5ead4;--blush:#c4906a;
-  --txt:#fdf6ea;--txt2:#e8d098;--txt3:#d4b882;
+  --bg:#130a18;--bg2:#1e1028;--bg3:#2a183a;--card:#1c102a;
+  --gold:#c9a84c;--gold2:#e8d5a0;--cream:#f5ead4;--blush:#d4a07c;
+  --txt:#fdf6ea;--txt2:#f0dcaa;--txt3:#e2c890;
   --border:rgba(201,168,76,0.20);--border2:rgba(201,168,76,0.40);
   --gold-dim:rgba(201,168,76,0.10);
   --c0:#e05555;--c1:#e07a35;--c2:#d4aa30;--c3:#4a9e6a;--c4:#5588cc;--c5:#9955cc;
@@ -72,13 +72,13 @@ html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--txt);font-family:'EB Garamond',serif;min-height:100vh;overflow-x:hidden;}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background:url('botticelli.jpg') center/cover fixed;
-  filter:sepia(20%) brightness(0.22) contrast(1.05);opacity:0.65;}
+  filter:sepia(18%) brightness(0.38) contrast(1.04);opacity:0.70;}
 
 /* NAV */
 #top-nav{
   position:fixed;top:0;left:0;right:0;z-index:1000;
   height:var(--nav-h);
-  background:rgba(9,6,10,0.97);
+  background:rgba(19,10,24,0.97);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid rgba(201,168,76,0.25);
@@ -182,8 +182,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 #view-chat.active{display:flex;}
 
 /* PAINTING */
-.paint-bg{position:absolute;inset:0;background:url('botticelli.jpg') center/cover;filter:sepia(10%) brightness(0.52) contrast(1.02);}
-.paint-grad{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(9,6,10,0.18) 0%,rgba(9,6,10,0.48) 55%,var(--bg) 100%);}
+.paint-bg{position:absolute;inset:0;background:url('botticelli.jpg') center/cover;filter:sepia(8%) brightness(0.72) contrast(1.02);}
+.paint-grad{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(19,10,24,0.06) 0%,rgba(19,10,24,0.36) 55%,var(--bg) 100%);}
 
 /* HOME */
 .home-hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:6rem 2rem 4rem;overflow:hidden;}
@@ -198,8 +198,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .home-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp 0.9s 1.1s ease both;}
 .btn-g{font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.25em;padding:0.85rem 2rem;background:var(--gold);color:var(--bg);border:none;cursor:pointer;transition:all 0.3s;}
 .btn-g:hover{background:var(--gold2);transform:translateY(-2px);}
-.btn-o{font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.25em;padding:0.85rem 2rem;background:none;color:var(--gold);border:1px solid var(--border2);cursor:pointer;transition:all 0.3s;}
-.btn-o:hover{background:var(--gold-dim);}
+.btn-o{font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.25em;padding:0.85rem 2rem;background:none;color:var(--blush);border:1px solid rgba(212,160,124,0.45);cursor:pointer;transition:all 0.3s;}
+.btn-o:hover{background:rgba(212,160,124,0.10);color:var(--cream);}
 .home-modules{position:relative;z-index:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:1px;background:var(--border);border-top:1px solid var(--border);border-bottom:1px solid rgba(201,168,76,0.22);}
 .hm{background:rgba(9,6,10,0.9);padding:2rem 1.4rem;cursor:pointer;transition:background 0.3s;position:relative;overflow:hidden;}
 .hm::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--ha,var(--gold));transform:scaleX(0);transform-origin:left;transition:transform 0.4s;}
@@ -399,7 +399,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 /* INTRO */
 #intro-screen{position:fixed;inset:0;z-index:800;display:flex;align-items:center;justify-content:center;background:rgba(9,6,10,0.97);backdrop-filter:blur(12px);transition:opacity 0.8s;overflow:hidden;}
 #intro-screen.out{opacity:0;pointer-events:none;}
-.i-paint{position:absolute;inset:0;background:url('botticelli.jpg') center/cover;filter:sepia(8%) brightness(0.55) contrast(1.02);animation:bgPan 40s ease-in-out infinite alternate;}
+.i-paint{position:absolute;inset:0;background:url('botticelli.jpg') center/cover;filter:sepia(6%) brightness(0.72) contrast(1.02);animation:bgPan 40s ease-in-out infinite alternate;}
 @keyframes bgPan{from{transform:scale(1.06) translateX(0);}to{transform:scale(1.06) translateX(-4%);}};
 .i-overlay{position:absolute;inset:0;background:radial-gradient(ellipse 65% 65% at 50% 50%,rgba(9,6,10,0.52) 0%,rgba(9,6,10,0.96) 100%);}
 .i-content{position:relative;z-index:2;text-align:center;max-width:550px;padding:3rem 2rem;}
