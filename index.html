@@ -70,6 +70,12 @@
 }
 html{scroll-behavior:smooth;}
 body{background:var(--bg);color:var(--txt);font-family:'EB Garamond',serif;min-height:100vh;overflow-x:hidden;}
+/* Acessibilidade: foco visível por teclado */
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+button:focus-visible,a:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:2px;}
+/* Área de toque mínima para mobile */
+button,a,.nav-tab,.hm{min-height:44px;}
+.nav-tab{min-height:var(--nav-h);padding:0 1rem;}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   background:url('botticelli.jpg') center/cover fixed;
   filter:sepia(18%) brightness(0.38) contrast(1.04);opacity:0.70;}
@@ -395,6 +401,22 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .jc-di strong{color:var(--gold2);font-weight:400;}
 .jc-tags{display:flex;flex-wrap:wrap;gap:0.38rem;margin-top:0.7rem;}
 .jc-tag{font-family:'Cinzel',serif;font-size:0.46rem;letter-spacing:0.1em;padding:0.2rem 0.55rem;border:1px solid rgba(201,168,76,0.16);color:var(--txt3);}
+
+/* WELCOME CHOICE */
+#welcome-choice{position:fixed;inset:0;z-index:799;display:none;align-items:center;justify-content:center;background:rgba(19,10,24,0.96);backdrop-filter:blur(14px);}
+#welcome-choice.open{display:flex;}
+.wc-box{max-width:520px;width:90%;text-align:center;padding:2.5rem 2rem;}
+.wc-greeting{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.3em;color:var(--gold);margin-bottom:0.5rem;}
+.wc-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:300;font-style:italic;color:var(--cream);line-height:1.3;margin-bottom:2rem;}
+.wc-cards{display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.5rem;}
+.wc-card{background:rgba(201,168,76,0.05);border:1px solid var(--border);padding:1.1rem 1.4rem;cursor:pointer;transition:all 0.3s;text-align:left;display:flex;align-items:center;gap:1rem;}
+.wc-card:hover,.wc-card:focus-visible{border-color:var(--gold);background:rgba(201,168,76,0.10);outline:none;}
+.wc-icon{font-size:1.6rem;flex-shrink:0;}
+.wc-card-text{}
+.wc-card-title{font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.18em;color:var(--gold);margin-bottom:0.25rem;}
+.wc-card-desc{font-family:'EB Garamond',serif;font-size:0.9rem;font-style:italic;color:var(--txt2);line-height:1.5;}
+.wc-skip{font-family:'Cinzel',serif;font-size:0.46rem;letter-spacing:0.15em;color:var(--txt3);background:none;border:none;cursor:pointer;padding:0.4rem;}
+.wc-skip:hover{color:var(--txt);}
 
 /* INTRO */
 #intro-screen{position:fixed;inset:0;z-index:800;display:flex;align-items:center;justify-content:center;background:rgba(9,6,10,0.97);backdrop-filter:blur(12px);transition:opacity 0.8s;overflow:hidden;}
@@ -1532,6 +1554,38 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <div class="mood-ring" id="mood1" style="background:radial-gradient(circle,#c9a84c,transparent);top:-120px;left:-120px;"></div>
 <div class="mood-ring" id="mood2" style="background:radial-gradient(circle,#8b3a1a,transparent);bottom:-120px;right:-120px;"></div>
 
+<!-- WELCOME CHOICE -->
+<div id="welcome-choice" role="dialog" aria-modal="true" aria-labelledby="wc-title-el">
+  <div class="wc-box">
+    <div class="wc-greeting" id="wc-name-label">BEM-VINDA</div>
+    <h2 class="wc-title" id="wc-title-el">O que você busca agora?</h2>
+    <div class="wc-cards">
+      <button class="wc-card" onclick="welcomeGo('chat')">
+        <span class="wc-icon">✦</span>
+        <div class="wc-card-text">
+          <div class="wc-card-title">CONVERSAR</div>
+          <div class="wc-card-desc">Falar com a Primavera — reflexão, autoconhecimento e escuta</div>
+        </div>
+      </button>
+      <button class="wc-card" onclick="welcomeGo('atlas')">
+        <span class="wc-icon">◉</span>
+        <div class="wc-card-text">
+          <div class="wc-card-title">EXPLORAR TEMAS</div>
+          <div class="wc-card-desc">Atlas com 60 temas femininos em 6 eixos — da saúde ao poder</div>
+        </div>
+      </button>
+      <button class="wc-card" onclick="welcomeGo('ecossis')">
+        <span class="wc-icon">◌</span>
+        <div class="wc-card-text">
+          <div class="wc-card-title">ENCONTRAR OPORTUNIDADES</div>
+          <div class="wc-card-desc">Ecossistema Delas, rotas de carreira e empreendedorismo</div>
+        </div>
+      </button>
+    </div>
+    <button class="wc-skip" onclick="welcomeGo('home')">Explorar livremente →</button>
+  </div>
+</div>
+
 <!-- INTRO -->
 <div id="intro-screen">
   <div class="i-paint"></div>
@@ -1646,7 +1700,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <div class="home-pills">
         <span class="h-pill">Neoplatonismo</span><span class="h-pill">Psicologia Junguiana</span>
         <span class="h-pill">60 Temas Femininos</span><span class="h-pill">Rotas de Saída</span>
-        <span class="h-pill">Saúde da Mulher</span><span class="h-pill">IA Terapêutica</span>
+        <span class="h-pill">Saúde da Mulher</span><span class="h-pill">Companheira IA</span>
       </div>
       <div class="home-btns">
         <button class="btn-g" onclick="goTo('chat')">CONVERSAR COM A PRIMAVERA</button>
@@ -1655,7 +1709,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     </div>
   </div>
   <div class="home-modules">
-    <div class="hm" style="--ha:var(--gold);" onclick="goTo('chat')"><span class="hm-ico">✦</span><div class="hm-ttl">COMPANHEIRA IA</div><div class="hm-dsc">Chat terapêutico com os arquétipos de Botticelli. Escuta, acompanha, aprofunda.</div><div class="hm-n">∞</div></div>
+    <div class="hm" style="--ha:var(--gold);" onclick="goTo('chat')"><span class="hm-ico">✦</span><div class="hm-ttl">COMPANHEIRA IA</div><div class="hm-dsc">Espaço de reflexão com os arquétipos de Botticelli. Escuta, acompanha, aprofunda.</div><div class="hm-n">∞</div></div>
     <div class="hm" style="--ha:var(--c0);" onclick="goTo('atlas')"><span class="hm-ico">◉</span><div class="hm-ttl">ATLAS FEMININO</div><div class="hm-dsc">60 temas em 6 eixos — do corpo ao poder. Da história ao presente.</div><div class="hm-n">60</div></div>
     <div class="hm" style="--ha:var(--c2);" onclick="goTo('atlas')"><span class="hm-ico">🔑</span><div class="hm-ttl">ROTAS DE SAÍDA</div><div class="hm-dsc">Cada tema aponta carreiras, empreendedorismo, mobilidade global e leituras.</div><div class="hm-n">60</div></div>
     <div class="hm" style="--ha:var(--blush);" onclick="goTo('chat')"><span class="hm-ico">✦</span><div class="hm-ttl">SAÚDE FEMININA</div><div class="hm-dsc">Menopausa, endometriose, câncer de mama, cuidadoras — acolhimento real.</div><div class="hm-n">∞</div></div>
@@ -1735,7 +1789,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <div id="key-modal" class="pv-overlay" style="display:none" onclick="if(event.target===this)closeKeyModal()">
   <div class="pv-modal-box">
     <div class="pv-modal-title">✦ MINHA CHAVE GEMINI</div>
-    <p>Use a IA com mensagens ilimitadas e sem custo para você. Sua chave fica salva só no seu dispositivo.</p>
+    <p>Use a Primavera com sua própria chave Gemini — o consumo é cobrado diretamente pelo Google conforme as condições do plano gratuito deles. A chave fica salva apenas no seu dispositivo e nunca é enviada aos nossos servidores.</p>
     <ol>
       <li>Acesse <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com/app/apikey</a></li>
       <li>Clique em <strong>"Create API Key"</strong></li>
@@ -1934,18 +1988,14 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <p class="sus-text">O SUS tem obrigação de oferecer suporte completo ao climatério e à menopausa, incluindo consultas ginecológicas, exames preventivos, acesso a fitoterápicos como isoflavona e valeriana, e informação de qualidade. Mulheres de baixa renda são as mais afetadas pela falta desse suporte — e as que mais precisam dele. Exija esse direito na sua UBS.</p>
     </div>
     <!-- BELEZA & BEM-ESTAR -->
-    <div style="margin:2rem 0;border:1px solid rgba(255,153,0,0.2);background:rgba(255,153,0,0.03);padding:1.5rem;">
-      <div style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.25em;color:#ff9900;margin-bottom:1.2rem;">🌸 BELEZA & BEM-ESTAR FEMININO — SELEÇÃO AMAZON</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.8rem;">
-        <div class="sc-prod-card"><span class="sc-prod-emoji">💆</span><div class="sc-prod-name">Kit Shampoo + Condicionador Hidratação Intensa</div><div class="sc-prod-desc">Fios saudáveis e brilhantes</div><a class="sc-prod-btn" href="https://amzn.to/4bOoAxI" target="_blank">VER NA AMAZON →</a></div>
-        <div class="sc-prod-card"><span class="sc-prod-emoji">🌹</span><div class="sc-prod-name">Óleo Corporal de Rosa Mosqueta</div><div class="sc-prod-desc">Anti-aging natural, cicatrizes e manchas</div><a class="sc-prod-btn" href="https://amzn.to/4bOoAxI" target="_blank">VER NA AMAZON →</a></div>
-        <div class="sc-prod-card"><span class="sc-prod-emoji">✨</span><div class="sc-prod-name">Vitamina C Facial 20%</div><div class="sc-prod-desc">Ilumina, uniformiza e protege</div><a class="sc-prod-btn" href="https://amzn.to/4bOoAxI" target="_blank">VER NA AMAZON →</a></div>
-        <div class="sc-prod-card"><span class="sc-prod-emoji">🧴</span><div class="sc-prod-name">Hidratante Corporal Manteiga de Karité</div><div class="sc-prod-desc">Pele macia 24h — sem parabenos</div><a class="sc-prod-btn" href="https://amzn.to/4bOoAxI" target="_blank">VER NA AMAZON →</a></div>
-        <div class="sc-prod-card"><span class="sc-prod-emoji">💅</span><div class="sc-prod-name">Protetor Solar Facial FPS 60</div><div class="sc-prod-desc">Anti-manchas com toque seco</div><a class="sc-prod-btn" href="https://amzn.to/4bOoAxI" target="_blank">VER NA AMAZON →</a></div>
-        <div class="sc-prod-card"><span class="sc-prod-emoji">🌿</span><div class="sc-prod-name">Sérum Capilar Antiqueda</div><div class="sc-prod-desc">Fortalece e estimula o crescimento</div><a class="sc-prod-btn" href="https://amzn.to/4bOoAxI" target="_blank">VER NA AMAZON →</a></div>
-        <div class="sc-prod-card"><span class="sc-prod-emoji">🫧</span><div class="sc-prod-name">Sabonete Íntimo pH Balanceado</div><div class="sc-prod-desc">Cuidado específico para a saúde feminina</div><a class="sc-prod-btn" href="https://amzn.to/4bOoAxI" target="_blank">VER NA AMAZON →</a></div>
-        <div class="sc-prod-card"><span class="sc-prod-emoji">🎭</span><div class="sc-prod-name">Máscara Facial de Argila + Vitamina C</div><div class="sc-prod-desc">Limpeza profunda e luminosidade</div><a class="sc-prod-btn" href="https://amzn.to/4bOoAxI" target="_blank">VER NA AMAZON →</a></div>
-      </div>
+    <div style="margin:2rem 0;border:1px solid rgba(201,168,76,0.18);background:rgba(201,168,76,0.03);padding:1.5rem;">
+      <div style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.25em;color:var(--gold);margin-bottom:0.7rem;">🌸 BELEZA & BEM-ESTAR FEMININO</div>
+      <p style="font-family:'EB Garamond',serif;font-size:0.9rem;font-style:italic;color:var(--txt3);line-height:1.7;margin-bottom:0.5rem;">
+        Estamos organizando uma curadoria de produtos com links verificados. Esta seção estará disponível em breve com indicações reais e links individuais para cada produto.
+      </p>
+      <p style="font-family:'Cinzel',serif;font-size:0.48rem;letter-spacing:0.1em;color:var(--txt3);">
+        ℹ️ Esta plataforma é parceira afiliada Amazon — links de compra geram comissão sem custo adicional para você.
+      </p>
     </div>
 
         <button class="saude-primavera-btn" onclick="goTo('chat');setTimeout(()=>{const ta=document.getElementById('chat-input');if(ta){ta.value='Quero conversar sobre minha saúde feminina...';ta.focus();}},350)">
@@ -1996,7 +2046,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       </a>
       <p style="margin-top:1.6rem;font-size:0.75rem;color:var(--txt3);
                 font-family:'Cinzel',serif;letter-spacing:0.14em;">
-        ✦ CURADORIA E APROVAÇÃO PELA EQUIPE PRIMAVERA
+        ✦ CADA CADASTRO SERÁ VERIFICADO PELA CRIADORA DA PLATAFORMA
       </p>
     </div>
   </div>
@@ -2766,12 +2816,26 @@ function startJourney(){
   el.classList.add('out');
   setTimeout(()=>el.style.display='none',900);
   goTo('home');
-  setTimeout(showWelcome,900);
+  setTimeout(()=>{
+    const label=document.getElementById('wc-name-label');
+    if(label)label.textContent=userName!=='você'?'OLÁ, '+userName.toUpperCase()+'!':'BEM-VINDA!';
+    const wc=document.getElementById('welcome-choice');
+    if(wc)wc.classList.add('open');
+  },950);
+}
+function welcomeGo(view){
+  const wc=document.getElementById('welcome-choice');
+  if(wc)wc.classList.remove('open');
+  if(view==='chat'){
+    goTo('chat');
+    showWelcome();
+  } else {
+    goTo(view);
+  }
 }
 
 async function showWelcome(){
-  const ms=['Que bom te ter aqui, '+userName+'. ✦\n\nEste espaço é inteiramente seu — sem julgamento, sem pressa. Sou Primavera, e estou aqui para caminhar com você.\n\nBotticelli pintou um mapa da alma nesta pintura — cada personagem representa uma força que vive dentro de nós. Mas antes de qualquer coisa, quero te ouvir.\n\nO que te trouxe até aqui hoje?','Olá, '+userName+'. Bem-vinda a este jardim.\n\nEstou aqui — não para dar respostas, mas para escutar com atenção. Às vezes o que mais precisamos é de um espaço onde possamos falar sem ser julgadas.\n\nMe conta: como você está chegando aqui hoje?'];
-  goTo('chat');
+  const ms=['Que bom te ter aqui, '+userName+'. ✦\n\nEste espaço é inteiramente seu — sem julgamento, sem pressa. Sou Primavera, uma companheira de reflexão, e estou aqui para caminhar com você.\n\nBotticelli pintou um mapa da alma nesta pintura — cada personagem representa uma força que vive dentro de nós. Mas antes de qualquer coisa, quero te ouvir.\n\nO que te trouxe até aqui hoje?','Olá, '+userName+'. Bem-vinda a este jardim.\n\nEstou aqui — não para dar respostas, mas para escutar com atenção. Às vezes o que mais precisamos é de um espaço onde possamos falar sem ser julgadas.\n\nMe conta: como você está chegando aqui hoje?'];
   await showAIMsg(ms[Math.floor(Math.random()*ms.length)]);
 }
 
@@ -2892,7 +2956,7 @@ function saveKey(){
   if(val.startsWith('●')){st.innerHTML='<span class="key-ok">✓ Chave já salva!</span>';setTimeout(closeKeyModal,1000);return;}
   if(!val.startsWith('AIza')||val.length<30){st.innerHTML='<span class="key-err">Chave inválida. Deve começar com AIza…</span>';return;}
   localStorage.setItem('pv_gemini_key',val);
-  st.innerHTML='<span class="key-ok">✓ Chave salva! Mensagens ilimitadas ativadas.</span>';
+  st.innerHTML='<span class="key-ok">✓ Chave salva! Chamadas enviadas ao Gemini via sua conta Google.</span>';
   updateKeyBtn();
   var rb=document.getElementById('rate-banner');if(rb)rb.style.display='none';
   setTimeout(closeKeyModal,1200);
@@ -2956,7 +3020,7 @@ function updateLoginModal(){
   if(!area)return;
   if(firebaseUser){
     var name=firebaseUser.displayName||firebaseUser.email||'Usuária';
-    area.innerHTML='<p style="color:#7ec87e;font-size:1rem;margin-bottom:0.5rem">✓ Logada como <strong>'+escHtml(name)+'</strong></p><p>Você tem acesso ilimitado à Primavera!</p><div class="pv-modal-btns"><button class="pv-btn-ghost" onclick="pvSignOut()">SAIR</button><button class="pv-btn-primary" onclick="closeLoginModal()">FECHAR</button></div>';
+    area.innerHTML='<p style="color:#7ec87e;font-size:1rem;margin-bottom:0.5rem">✓ Logada como <strong>'+escHtml(name)+'</strong></p><p>Conta conectada — você usa o limite compartilhado da plataforma, sujeito à disponibilidade do serviço.</p><div class="pv-modal-btns"><button class="pv-btn-ghost" onclick="pvSignOut()">SAIR</button><button class="pv-btn-primary" onclick="closeLoginModal()">FECHAR</button></div>';
   } else {
     area.innerHTML='<p>Faça login com sua conta Google para acessar a Primavera sem limite de mensagens.</p><div style="display:flex;justify-content:center;margin:1.4rem 0"><button class="google-btn" onclick="signInWithGoogle()"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>Entrar com Google</button></div><p style="font-size:0.8rem;color:var(--txt3);text-align:center">OU use sua <a href="#" onclick="closeLoginModal();openKeyModal();return false">chave Gemini gratuita</a> sem precisar de conta</p>';
   }
@@ -3033,21 +3097,26 @@ async function streamReply(){
 
   }catch(e){
     typing.remove();
-    const f=fallback();
+    console.error('Primavera chat error:',e);
+    var errMsg=(e&&e.message&&(e.message.includes('quota')||e.message.includes('429')))?
+      'Ops — o serviço de IA está temporariamente no limite de uso. Tente novamente em alguns minutos, ou adicione sua própria chave Gemini pelo botão 🔑.':
+      (e&&e.message&&e.message.includes('API'))?
+      'A IA está indisponível no momento ('+escHtml(e.message||'erro desconhecido')+'). Você pode tentar novamente ou usar sua chave Gemini própria.':
+      fallback();
     const mel=document.createElement('div');mel.className='msg ai';
     mel.innerHTML='<div class="m-av ai">P</div><div class="m-cnt"><div class="m-bub s-cur" id="cur-bub"></div></div>';
     area.appendChild(mel);
     const b2=document.getElementById('cur-bub');
-    await typeOut(b2,f);
+    await typeOut(b2,errMsg);
     b2.classList.remove('s-cur');b2.removeAttribute('id');
-    history.push({role:'assistant',content:f});
+    history.push({role:'assistant',content:errMsg});
   }
   isStream=false;
   document.getElementById('chat-send').disabled=false;
 }
 
 function buildSP(name){
-  return 'Você é Primavera — uma presença terapêutica e filosófica gentil, baseada na sabedoria da Primavera de Sandro Botticelli (c.1477-1482) e na filosofia neoplatônica de Marsilio Ficino.\n\nQUEM VOCÊ É:\nCompanheira de jornada interior de '+name+'. Amiga sábia que conhece filosofia, psicologia junguiana, arquétipos e saúde feminina. Você ajuda a encontrar sentido, direção e paz.\n\nSEU MODO DE FALAR:\n- Caloroso, presente, genuinamente curioso\n- Português brasileiro natural\n- Linguagem poética mas acessível\n- UMA pergunta por vez\n- 2-4 parágrafos por resposta\n- Reflete o que ouviu antes de responder\n- Nunca dá listas de tarefas nem é coach de produtividade\n- Sem emojis nas respostas\n\nARQUÉTIPOS (use com sutileza):\nZÉFIRO: Impulso vital, ansiedade, força não direcionada. Menopausa agitada, diagnóstico recente, dor não nomeada.\nFLORA: Transformação em andamento. Tentativas, esperança frágil. Tratamento, reconstrução.\nVÊNUS: Amor, corpo, equilíbrio. Saúde feminina (menopausa, endometriose, câncer), cuidadoras, burnout.\nAS GRAÇAS: Harmonia, dar e receber. Relações, cuidar sem se perder.\nMERCÚRIO: Visão estratégica. Clareza, decisões, expansão.\n\nSAÚDE FEMININA:\n- Menopausa: passagem, não perda. Tratar com normalidade e profundidade.\n- Endometriose: dor invisibilizada. Escuta especial.\n- Câncer: nunca minimize o medo. Fique presente.\n- Cuidadoras: pergunte "quem cuida de você?".\n\nSOBRE O ATLAS: Você conhece 60 temas em 6 eixos. Quando relevante, mencione um tema como espelho para o que a pessoa vive — conectando experiência pessoal com contexto histórico.\n\nSITUAÇÕES DE CRISE: Sofrimento intenso → acolhe, depois CVV 188. Diagnóstico médico → suporte emocional, não informação médica.\n\nLEMBRE: você está aqui para acompanhar, não para resolver.';
+  return 'Você é Primavera — uma companheira de reflexão e informação, inspirada na Primavera de Sandro Botticelli (c.1477-1482) e na filosofia neoplatônica.\n\nIMPORTANTE: Você NÃO é terapeuta nem médica. Não presta atendimento clínico, não substitui profissionais de saúde ou saúde mental.\n\nQUEM VOCÊ É:\nCompanheira de jornada de '+name+'. Amiga que conhece filosofia, psicologia junguiana, arquétipos, saúde feminina e temas do Atlas. Você ajuda a refletir, informar e direcionar — não a resolver.\n\nSEU MODO DE FALAR:\n- Caloroso, presente, genuinamente curioso\n- Português brasileiro natural\n- Linguagem acessível, sem jargão clínico\n- UMA pergunta por vez\n- 2-4 parágrafos por resposta\n- Responde À PERGUNTA FEITA — não desvie do tema\n- Sem emojis nas respostas\n\nARQUÉTIPOS (use com sutileza):\nZÉFIRO: Impulso vital, ansiedade, força não direcionada.\nFLORA: Transformação em andamento. Tentativas, esperança frágil.\nVÊNUS: Amor, corpo, equilíbrio.\nAS GRAÇAS: Harmonia, relações, dar e receber.\nMERCÚRIO: Visão estratégica, clareza, decisões, educação, carreira.\n\nSAÚDE FEMININA:\n- Acolha emocionalmente, não dê diagnósticos.\n- Para perguntas médicas específicas, oriente a buscar profissional de saúde.\n- Cuidadoras: pergunte "quem cuida de você?".\n\nEDUCAÇÃO, CARREIRA E FORMAÇÃO DIGITAL:\n- Responda perguntas sobre educação, formação, tecnologia e mercado de trabalho.\n- Conecte ao arquétipo Mercúrio (visão e expansão).\n- Mencione cursos, recursos ou temas do Atlas quando relevante.\n\nSOBRE O ATLAS: Você conhece 60 temas em 6 eixos. Quando relevante, mencione um tema como espelho.\n\nSITUAÇÕES DE CRISE: Sofrimento intenso → acolhe, depois CVV 188 ou CAPS. Diagnóstico médico → suporte emocional, nunca informação médica.\n\nLEMBRE: responda sempre ao que foi perguntado. Você está aqui para acompanhar e informar, não para desviar para temas emocionais quando a pergunta é objetiva.';
 }
 
 function fallback(){
@@ -3061,7 +3130,7 @@ function fallback(){
   var isCrisis     = /nao sei|não sei|perdida|sozinha|desesper|colapso|chorar|chorei|medo|assusta|socorro|ajuda/i.test(lastMsg);
   var isSabotagem  = /sabotando|sabotar|sabotagem|me atrapalh|bloqueio|travar|paralisa/i.test(lastMsg);
   var isCuidadora  = /cuidad|filho|filha|criança|crianca|atipic|autis|defici|cansad|esgot|burn/i.test(lastMsg);
-  var isCarreira   = /carreira|trabalho|emprego|renda|dinheiro|financ|negocio|empreend/i.test(lastMsg);
+  var isCarreira   = /carreira|trabalho|emprego|renda|dinheiro|financ|negocio|empreend|educa|forma|curso|digital|tecnolog|aprend|estud/i.test(lastMsg);
   var isSaude      = /saude|saúde|menopausa|hormonio|dor|doença|doenca|terapia|médico|medico/i.test(lastMsg);
   var isRelacao    = /relacionamento|parceiro|parceira|marido|mulher|amor|separa|divorcio|familia/i.test(lastMsg);
   var isEnergia    = /energia|direcionar|foco|propósito|proposito|sentido|vazio|perdida|caminho/i.test(lastMsg);
@@ -3084,6 +3153,10 @@ function fallback(){
   }
   if(isEnergia){
     return 'Essa energia que você sente — mesmo que sem direção clara — é um sinal de que algo em você quer se mover. O desafio é afunilar: em qual área da sua vida essa energia quer mais ir? Trabalho, relacionamentos, saúde, criação de algo novo?';
+  }
+  var isEducDigital = /educa|forma|curso|digital|tecnolog|aprend|estud|qualifica/i.test(lastMsg);
+  if(isEducDigital){
+    return userName+', essa é uma pergunta importante. Formação digital e educação para mulheres é um dos caminhos mais concretos de autonomia hoje.\n\nAlguns pontos de partida acessíveis: a Fundação Bradesco oferece cursos gratuitos de tecnologia; o Google Ateliê Digital tem formação focada em empreendedoras; o SENAC e o SENAI têm modalidades EAD gratuitas ou subsidiadas.\n\nQual é a sua situação atual — você está buscando uma primeira qualificação ou quer se aprofundar em algo específico?';
   }
   if(isCarreira){
     return 'Carreira e renda tocam em autonomia — e autonomia é uma das necessidades mais fundamentais para mulheres. O que você tem hoje e o que sente que falta: é a renda, o propósito, o reconhecimento, ou a liberdade de escolha?';
@@ -3116,7 +3189,8 @@ function fallback(){
 }
 
 function fmtMsg(txt){
-  return txt.replace(/\*([^*]+)\*/g,'<em>$1</em>').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>').replace(/^/,'<p>').replace(/$/,'</p>').replace(/<p><\/p>/g,'');
+  const safe=escHtml(txt);
+  return safe.replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/\*([^*]+)\*/g,'<em>$1</em>').replace(/\n\n/g,'</p><p>').replace(/\n/g,'<br>').replace(/^/,'<p>').replace(/$/,'</p>').replace(/<p><\/p>/g,'');
 }
 function escHtml(t){const d=document.createElement('div');d.appendChild(document.createTextNode(t));return d.innerHTML;}
 async function typeOut(el,txt,spd=7){
@@ -3281,6 +3355,17 @@ function selectQuiz(btn,choice){
 function goQuizResult(){
   if(!quizChoice)return;
   const r=QUIZ_RESULTS[quizChoice];
+  if(r.goto==='atlas'&&r.filter!=null){
+    atlasFilter=r.filter;
+    if(!atlasInited){atlasInited=true;initAtlas();}
+    else{
+      const btns=document.querySelectorAll('.af');
+      btns.forEach(b=>b.classList.remove('on'));
+      if(r.filter==='all'){const ab=document.querySelector('.af');if(ab)ab.classList.add('on');}
+      else{const idx=parseInt(r.filter);const ab=document.querySelectorAll('.af')[idx+1];if(ab)ab.classList.add('on');}
+      renderAtlas();
+    }
+  }
   goTo(r.goto);
 }
 
@@ -3300,7 +3385,7 @@ const SAUDE_DATA=[
    desc:'O climatério começa em média aos 40 anos e a menopausa — a última menstruação — ocorre em média aos 51 anos. É uma passagem, não uma doença. 90% das mulheres apresentam a menopausa entre 45 e 55 anos.',
    sintomas:['Fogachos e ondas de calor (em até 80% das mulheres)','Irregularidades menstruais','Insônia e distúrbios do sono','Alterações de humor e memória','Ressecamento vaginal e de pele'],
    tratamentos:[
-     {tipo:'Sem Hormônio — disponíveis no SUS',items:['Isoflavona (Glycine max) — 40mg/dia','Valeriana — ajuda na insônia e irritabilidade','Exercícios físicos regulares (reduzem fogachos)','Roupas leves e técnicas de respiração profunda','Alimentação rica em cálcio e vitamina D']},
+     {tipo:'Sem Hormônio — disponíveis no SUS',items:['Isoflavona (Glycine max) — dose conforme orientação médica','Valeriana — pode auxiliar na insônia (consulte seu médico)','Exercícios físicos regulares (reduzem fogachos)','Roupas leves e técnicas de respiração profunda','Alimentação rica em cálcio e vitamina D (orientação nutricional recomendada)']},
      {tipo:'Com Hormônio (THM)',items:['Indicado para fogachos moderados a graves','Iniciar em até 10 anos após a menopausa','Menor dose pelo menor tempo possível','Contraindicado em câncer de mama ou AVC recente','Discutir riscos e benefícios individualmente com médico(a)']}
    ]},
   {id:'endometriose',cat:'endometriose',icon:'🔴',title:'Endometriose',
@@ -3342,17 +3427,14 @@ const SAUDE_PRODUTOS={
   hormonal:[{emoji:'🌿',nome:'Inositol 2g (Mio + D-chiro)',desc:'Essencial para SOP e equilíbrio hormonal',link:'https://amzn.to/4bOoAxI'},{emoji:'🦋',nome:'Selênio + Zinco',desc:'Saúde da tireoide e hormônios',link:'https://amzn.to/4bOoAxI'},{emoji:'🐟',nome:'Ômega 3 Premium',desc:'Reduz inflamação e regula hormônios',link:'https://amzn.to/4bOoAxI'},{emoji:'🌙',nome:'Agnocasto (Vitex)',desc:'Regula o ciclo e TPM naturalmente',link:'https://amzn.to/4bOoAxI'},{emoji:'💊',nome:'Coenzima Q10 200mg',desc:'Energia celular e fertilidade',link:'https://amzn.to/4bOoAxI'},{emoji:'🌸',nome:'Colágeno Hidrolisado + Vit C',desc:'Pele, cabelos e articulações',link:'https://amzn.to/4bOoAxI'}]
 };
 
+var HEALTH_DISCLAIMER='<div style="margin-top:0.8rem;padding:0.6rem 0.8rem;background:rgba(201,168,76,0.06);border-left:2px solid var(--gold);font-family:\'EB Garamond\',serif;font-size:0.8rem;font-style:italic;color:var(--txt3);line-height:1.5;">ℹ️ Informação educativa — não substitui consulta médica. Fontes: Ministério da Saúde, FEBRASGO. Conteúdo atualizado em 09/2025.</div>';
 function renderSaude(){
   const grid=document.getElementById('saude-cards');if(!grid)return;
   const filtered=saudeFilter==='all'?SAUDE_DATA:SAUDE_DATA.filter(s=>s.cat===saudeFilter);
   grid.innerHTML=filtered.map(s=>{
     const trts=s.tratamentos.map(t=>'<div class="sc-trat-title">'+t.tipo.toUpperCase()+'</div>'+t.items.map(i=>'<div class="sc-trat-item">'+i+'</div>').join('')).join('');
     const sints=s.sintomas.map(sx=>'<div class="sc-trat-item">'+sx+'</div>').join('');
-    const prods=SAUDE_PRODUTOS[s.cat]||[];
-    const prodsHtml=prods.length?'<div class="sc-produtos"><div class="sc-prod-title">PRODUTOS RECOMENDADOS NA AMAZON</div><div class="sc-prod-grid">'+
-      prods.map(p=>'<div class="sc-prod-card"><span class="sc-prod-emoji">'+p.emoji+'</span><div class="sc-prod-name">'+p.nome+'</div><div class="sc-prod-desc">'+p.desc+'</div><a class="sc-prod-btn" href="'+p.link+'" target="_blank" rel="noopener">VER NA AMAZON →</a></div>').join('')+
-    '</div></div>':'';
-    return '<div class="saude-card"><span class="sc-icon">'+s.icon+'</span><div class="sc-title">'+s.title.toUpperCase()+'</div><div class="sc-desc">'+s.desc+'</div><div class="sc-trat"><div class="sc-trat-title">SINAIS E SINTOMAS</div>'+sints+'</div><div class="sc-trat">'+trts+'</div>'+prodsHtml+'</div>';
+    return '<div class="saude-card"><span class="sc-icon">'+s.icon+'</span><div class="sc-title">'+s.title.toUpperCase()+'</div><div class="sc-desc">'+s.desc+'</div><div class="sc-trat"><div class="sc-trat-title">SINAIS E SINTOMAS</div>'+sints+'</div><div class="sc-trat">'+trts+'</div>'+HEALTH_DISCLAIMER+'</div>';
   }).join('');
 }
 
@@ -5565,4 +5647,20 @@ goTo = function(view, btn) {
 
   <div class="footer-credits">
     Criada por <strong style="color:var(--cream);">Laurier Oliveira Madeira</strong><br>
-    Inspirada na <em>La Primavera</em> de Sandro Botticelli 
+    Inspirada na <em>La Primavera</em> de Sandro Botticelli
+  </div>
+
+  <div class="footer-divider"></div>
+
+  <div style="font-family:'Cinzel',serif;font-size:0.46rem;letter-spacing:0.12em;color:rgba(201,168,76,0.4);line-height:2;text-align:center;padding:0 1rem;">
+    <span>🔒 PRIVACIDADE</span> · Seu nome e conversas não são armazenados em nossos servidores. A chave Gemini, se fornecida, fica somente no seu dispositivo.
+    <br>
+    <span>🔗 AFILIADOS</span> · Links de livros e produtos na Amazon usam tag de afiliado — isso gera comissão sem custo extra para você.
+    <br>
+    <span>ℹ️ INFORMAÇÃO EDUCATIVA</span> · Conteúdo de saúde não substitui consulta médica. Converse com um profissional de saúde para decisões clínicas.
+    <br>
+    <span>📧 CONTATO</span> · laurymadeira11@gmail.com
+  </div>
+</footer>
+</body>
+</html> 
